@@ -13,8 +13,23 @@ description: |
 ## 样式规范速查
 
 ### Figure 模板
+
+**单图（无 subplot）时**：设定 figure 尺寸为 560×420
 ```matlab
 figure('Color', 'w', 'Position', [200, 100, 560, 420]);
+hold on; grid on; box on;
+
+% 配色方案（plot 前）
+try
+    co = colororder('gem');
+catch
+    co = lines(7);
+end
+```
+
+**多子图（含 subplot）时**：不设置 Position，让 MATLAB 自动分配子图布局空间
+```matlab
+figure('Color', 'w');
 hold on; grid on; box on;
 
 % 配色方案（plot 前）
@@ -130,7 +145,7 @@ ylabel('{\itS}\rm_{out}', 'Interpreter', 'tex');  % 斜体 S，正体下标 out
 - 轴设置：`xlim`, `ylim`, `xticks`, `yticks`
 
 **Step 2：应用样式**
-- 替换 `figure()` 为标准模板
+- 替换 `figure()` 为标准模板：无 subplot 时设定 `'Position', [200, 100, 560, 420]`；含 subplot 时不设置 Position
 - 插入配色方案（plot 前）
 - 按曲线类型规则设置线条/标记样式
 - **当存在可分组的曲线结构时**：先用 `question` 工具询问用户图例呈现方式（分组 or 平铺），再按用户选择应用对应图例方案
@@ -161,7 +176,7 @@ set(gca, 'YScale', 'log');  % Y轴对数
 set(gca, 'XScale', 'log', 'YScale', 'log');  % 双对数
 ```
 
-**多子图：** 每个 subplot 单独设置 gca 样式，根据各自标签内容选择字体。
+**多子图：** 每个 subplot 单独设置 gca 样式，根据各自标签内容选择字体。多子图时不设置 figure Position，保留默认尺寸由 MATLAB 自动布局。
 
 **仅图例项（无数据）：**
 ```matlab
