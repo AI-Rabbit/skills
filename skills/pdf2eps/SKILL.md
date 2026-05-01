@@ -1,6 +1,6 @@
 ---
 name: pdf2eps
-description: Convert PDF files to EPS (Encapsulated PostScript) format. Use this skill whenever the user wants to convert PDF files to EPS, batch convert PDFs in a directory, or mentions pdftops, PDF to PostScript conversion, or embedding PDF graphics as EPS. Trigger this skill even if the user only says "convert these PDFs" in a context where EPS is the expected output (e.g., LaTeX workflows).
+description: 将 PDF 文件转换为 EPS（Encapsulated PostScript）格式。当用户想要将 PDF 文件转换为 EPS、批量转换目录中的 PDF、提到 pdftops、PDF 转 PostScript 转换或嵌入 PDF 图形为 EPS 时使用此技能。即使用户只说"转换这些 PDF"但上下文表明预期输出是 EPS（例如 LaTeX 工作流），也应触发此技能。
 ---
 
 # PDF to EPS Converter
