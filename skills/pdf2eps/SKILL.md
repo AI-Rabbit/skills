@@ -1,4 +1,4 @@
-﻿---
+---
 name: pdf2eps
 description: Convert PDF files to EPS (Encapsulated PostScript) format. Use this skill whenever the user wants to convert PDF files to EPS, batch convert PDFs in a directory, or mentions pdftops, PDF to PostScript conversion, or embedding PDF graphics as EPS. Trigger this skill even if the user only says "convert these PDFs" in a context where EPS is the expected output (e.g., LaTeX workflows).
 ---
