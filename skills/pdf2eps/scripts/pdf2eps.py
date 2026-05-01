@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
-"""Batch convert PDF files in a directory to EPS format using pdftops."""
+"""Batch convert PDF files in a directory to EPS format using pdftops.
 
+Usage:
+    python pdf2eps.py                     # interactive prompt (falls back to cwd if non-TTY)
+    python pdf2eps.py <directory>         # convert all PDFs in <directory>
+    python pdf2eps.py .                   # convert all PDFs in current directory
+"""
+
+import argparse
 import subprocess
 import sys
 from pathlib import Path
@@ -24,16 +31,29 @@ def check_pdftops() -> str:
 
 
 def prompt_directory() -> Path:
+    """Prompt user for directory. Falls back to cwd if stdin is not a TTY."""
+    if not sys.stdin.isatty():
+        print("No directory specified, using current directory.")
+        return Path.cwd()
+
     print("Select the directory to convert:")
     print("  1. Current directory")
     print("  2. Enter a custom path")
     print()
-    choice = input("Enter choice (1 or 2): ").strip()
+    try:
+        choice = input("Enter choice (1 or 2): ").strip()
+    except EOFError:
+        print("No input available, using current directory.")
+        return Path.cwd()
 
     if choice == "1":
         return Path.cwd()
     elif choice == "2":
-        path_str = input("Enter the directory path: ").strip()
+        try:
+            path_str = input("Enter the directory path: ").strip()
+        except EOFError:
+            print("No input available, using current directory.")
+            return Path.cwd()
         target = Path(path_str)
         if not target.is_dir():
             print(f"Error: '{target}' is not a valid directory.")
@@ -45,7 +65,24 @@ def prompt_directory() -> Path:
 
 
 def main() -> None:
-    target_dir = prompt_directory()
+    parser = argparse.ArgumentParser(
+        description="Batch convert PDF files to EPS format using pdftops."
+    )
+    parser.add_argument(
+        "directory",
+        nargs="?",
+        default=None,
+        help="Directory containing PDF files (default: prompt or current directory)",
+    )
+    args = parser.parse_args()
+
+    if args.directory:
+        target_dir = Path(args.directory)
+        if not target_dir.is_dir():
+            print(f"Error: '{target_dir}' is not a valid directory.")
+            sys.exit(1)
+    else:
+        target_dir = prompt_directory()
 
     pdftops = check_pdftops()
 

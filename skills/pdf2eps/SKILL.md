@@ -16,16 +16,21 @@ The `pdftops` utility must be installed and available in the system PATH. Common
 
 ## Workflow
 
-1. **Run the bundled script** (preferred):
-   ```bash
-   python scripts/pdf2eps.py
-   ```
-   - The script will interactively prompt the user to choose between:
-     1. Current working directory
-     2. A user-specified custom path
-   - If the chosen path is invalid, the script exits with an error.
+**CRITICAL — ALWAYS use the bundled Python script first.** Do NOT invoke `pdftops` directly. The script handles dependency checks, error reporting, and batch processing correctly. Only fall back to manual conversion if Python is unavailable.
 
-2. **Fallback without Python**: If Python is not available, perform the conversion manually:
+1. **Run the bundled script**:
+   ```bash
+   # Convert PDFs in current directory
+   python scripts/pdf2eps.py .
+
+   # Convert PDFs in a specific directory
+   python scripts/pdf2eps.py /path/to/pdf/dir
+   ```
+   - The script checks that `pdftops` is installed, finds all `.pdf` files, converts each one, and reports successes/failures.
+   - The base directory for the script is the skill directory: `<skill-base>/scripts/pdf2eps.py`
+   - Always pass the target directory as a command-line argument to avoid interactive prompts.
+
+2. **Fallback (Python not available)**: ONLY use this if `python` or `python3` cannot be found.
    - Check that `pdftops` is installed.
    - Find all `.pdf` files in the target directory.
    - For each PDF, run:
