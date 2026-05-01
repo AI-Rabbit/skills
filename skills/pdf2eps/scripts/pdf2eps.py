@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Batch convert PDF files in a directory to EPS format using pdftops."""
 
 import subprocess
